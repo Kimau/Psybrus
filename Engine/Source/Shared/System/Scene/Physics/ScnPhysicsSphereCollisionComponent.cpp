@@ -65,3 +65,14 @@ void ScnPhysicsSphereCollisionComponent::onDetach( ScnEntityWeakRef Parent )
 {
 	Super::onDetach( Parent );
 }
+
+//////////////////////////////////////////////////////////////////////////
+//  Set Radius
+void ScnPhysicsSphereCollisionComponent::setRadius(BcF32 newRadius)
+{
+  Radius_ = newRadius; 
+  if (CollisionShape_ != nullptr) {
+    auto sphere = static_cast<btSphereShape*>(CollisionShape_);
+    sphere->setUnscaledRadius(newRadius);
+  }
+}

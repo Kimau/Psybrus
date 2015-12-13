@@ -31,6 +31,9 @@ public:
 	void onAttach( ScnEntityWeakRef Parent ) override;
 	void onDetach( ScnEntityWeakRef Parent ) override;
 
+  BcF32 radius() const { return Radius_; }
+  void setRadius(BcF32 newRadius);
+
 protected:
 	BcF32 Radius_;
 };

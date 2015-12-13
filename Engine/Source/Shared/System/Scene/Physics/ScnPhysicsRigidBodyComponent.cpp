@@ -38,6 +38,7 @@ void ScnPhysicsRigidBodyComponent::StaticRegisterClass()
 		new ReField( "Restitution_", &ScnPhysicsRigidBodyComponent::Restitution_, bcRFF_IMPORTER ),
 		new ReField( "LinearSleepingThreshold_", &ScnPhysicsRigidBodyComponent::LinearSleepingThreshold_, bcRFF_IMPORTER ),
 		new ReField( "AngularSleepingThreshold_", &ScnPhysicsRigidBodyComponent::AngularSleepingThreshold_, bcRFF_IMPORTER ),
+    new ReField("LockOnY_", &ScnPhysicsRigidBodyComponent::LockOnY_, bcRFF_IMPORTER),
 	};
 
 	using namespace std::placeholders;
@@ -123,6 +124,16 @@ void ScnPhysicsRigidBodyComponent::applyCentralImpulse( const MaVec3d& Impulse )
 	BcAssert( RigidBody_ != nullptr );	
 	RigidBody_->activate();
 	RigidBody_->applyCentralImpulse( ScnPhysicsToBullet( Impulse ) );
+}
+
+
+void ScnPhysicsRigidBodyComponent::lockOnY()
+{
+  LockOnY_ = BcTrue;
+  if (RigidBody_ != nullptr) {
+    RigidBody_->setLinearFactor(btVector3(1, 0, 1));
+    RigidBody_->setAngularFactor(btVector3(0, 1, 0));
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -250,6 +261,11 @@ void ScnPhysicsRigidBodyComponent::onAttach( ScnEntityWeakRef Parent )
 	ConstructionInfo.m_angularSleepingThreshold = AngularSleepingThreshold_;
 	RigidBody_ = new btRigidBody( ConstructionInfo );
 	RigidBody_->setUserPointer( this );
+
+  if (LockOnY_) {
+    lockOnY();
+  }
+
 	World_->addRigidBody( RigidBody_ );
 }
 

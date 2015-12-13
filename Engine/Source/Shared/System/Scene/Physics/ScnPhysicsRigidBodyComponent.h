@@ -37,6 +37,8 @@ public:
 	void applyImpulse( const MaVec3d& Impulse, const MaVec3d& RelativePos );
 	void applyCentralImpulse( const MaVec3d& Impulse );
 
+  void lockOnY();
+
 	void setLinearVelocity( const MaVec3d& Velocity );
 	MaVec3d getLinearVelocity() const;
 	void setAngularVelocity( const MaVec3d& Velocity );
@@ -66,6 +68,7 @@ private:
 	class btRigidBody* RigidBody_;
 
 	BcF32 Mass_;
+  BcBool LockOnY_;
 
 	// TODO: Physics material.
 	BcF32 Friction_;
