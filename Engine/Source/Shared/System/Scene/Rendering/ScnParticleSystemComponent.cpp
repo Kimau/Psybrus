@@ -261,7 +261,7 @@ void ScnParticleSystemComponent::render( ScnRenderContext & RenderContext )
 					}
 				}
 
-				BcAssert( NoofParticlesRendered == NoofParticlesToRender );
+				// BcAssert( NoofParticlesRendered == NoofParticlesToRender );
 				UploadFence_.decrement();
 			} );
 	}
@@ -426,6 +426,12 @@ BcBool ScnParticleSystemComponent::allocParticle( ScnParticle*& pParticle )
 	return BcFalse;
 }
 
+static BcF32 hackTimer = 1.0f;
+void ScnParticleSystemComponent::setHackTimer(BcF32 hackTimer)
+{
+  hackTimer = hackTimer;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // updateParticle
 void ScnParticleSystemComponent::updateParticle( ScnParticle& Particle, BcF32 Tick )
@@ -467,6 +473,8 @@ void ScnParticleSystemComponent::updateParticle( ScnParticle& Particle, BcF32 Ti
 void ScnParticleSystemComponent::updateParticles( const ScnComponentList& Components )
 {
 	BcF32 Tick = SysKernel::pImpl()->getFrameTime();
+  // LD HACK
+  Tick *= hackTimer;
 	
 	for( auto Component : Components )
 	{

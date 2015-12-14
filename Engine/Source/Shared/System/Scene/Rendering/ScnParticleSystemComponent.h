@@ -86,6 +86,9 @@ public:
 	 */
 	void setTransform( MaMat4d Transform ){ Transform_ = Transform; }
 
+  // HORRID HACK FOR LD
+  void setHackTimer(BcF32 hackTimer);
+
 private:
 	void updateParticle( ScnParticle& Particle, BcF32 Tick );
 
