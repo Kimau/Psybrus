@@ -538,7 +538,7 @@ void ScnModelImport::serialiseMesh(
 			for( BcU32 IndexIdx = 0; IndexIdx < Face.mNumIndices; ++ IndexIdx )
 			{
 				BcU32 Index = Face.mIndices[ IndexIdx ];
-				BcAssert( Index < 0x10000 );
+				BcAssertMsg( Index < 0x10000, "Too Many Indexes");  // Added Message to make clearer - CB
 				IndexDataStream_ << BcU16( Index );
 				++TotalIndices;
 			}
